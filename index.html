@@ -510,6 +510,81 @@
       border-color: var(--green);
     }
 
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .exp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.8rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem 2rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--green);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .exp-card:hover {
+      border-color: var(--green);
+      box-shadow: 0 0 24px rgba(0,255,65,0.07);
+    }
+
+    .exp-card:hover::before { opacity: 1; }
+
+    .exp-company {
+      font-family: var(--sans);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .exp-role {
+      color: var(--green);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      margin: 0.3rem 0 0.8rem;
+    }
+
+    .exp-date {
+      color: var(--grey);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      grid-column: 1 / -1;
+    }
+
+    .exp-bullets li {
+      color: var(--grey);
+      font-size: 0.8rem;
+      line-height: 1.8;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '›';
+      color: var(--green);
+      position: absolute;
+      left: 0;
+    }
+
     /* CONTACT */
     #contact {
       text-align: center;
@@ -602,11 +677,33 @@
 
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      nav ul { gap: 1.2rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.7rem; }
       #hero, section { padding: 4rem 1.5rem; }
+      .hero-name { font-size: 2.8rem; }
+      .hero-title { font-size: 0.78rem; }
+      .terminal-block { padding: 1rem; }
+      .terminal-line { font-size: 0.72rem; }
+      .hero-cta { flex-direction: column; gap: 0.75rem; }
+      .btn { text-align: center; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .contact-box { padding: 2.5rem 1.5rem; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .exp-card { grid-template-columns: 1fr; }
+      .exp-date { text-align: left; margin-top: -0.5rem; margin-bottom: 0.5rem; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-links { flex-direction: row; align-items: flex-start; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .contact-box { padding: 2rem 1.5rem; }
+      .contact-links { flex-direction: column; align-items: center; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      nav ul { gap: 0.6rem; }
+      nav ul a::before { display: none; }
+      .hero-name { font-size: 2.2rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .stat-num { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -620,6 +717,7 @@
     <div class="nav-logo">hk<span>@sec:~$</span></div>
     <ul>
       <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
       <li><a href="#projects">projects</a></li>
       <li><a href="#skills">skills</a></li>
       <li><a href="#contact">contact</a></li>
@@ -633,7 +731,7 @@
     <div class="hero-content">
       <p class="hero-prompt">// security engineer & grc specialist</p>
       <h1 class="hero-name">Harshitha<br /><span class="accent">Kishorekumar</span></h1>
-      <p class="hero-title">M.Sc. Computer Science · CISPA Helmholtz · Allianz Technology SE</p>
+      <p class="hero-title">M.Sc. Computer Science · CISPA Helmholtz · Allianz Technology SE · Bosch</p>
 
       <div class="terminal-block">
         <div class="terminal-bar">
@@ -642,11 +740,11 @@
           <div class="dot green"></div>
         </div>
         <div class="terminal-line"><span class="cmd">$ whoami</span></div>
-        <div class="terminal-line"><span class="val">harshitha_k — cybersecurity engineer on a CISO track</span></div>
+        <div class="terminal-line"><span class="val">harshitha_k — cybersecurity & GRC professional</span></div>
         <div class="terminal-line" style="margin-top:0.5rem;"><span class="cmd">$ cat expertise.txt</span></div>
         <div class="terminal-line"><span class="val">AppSec · Cloud Security · NIS2/DORA · Threat Modeling · GRC</span></div>
         <div class="terminal-line" style="margin-top:0.5rem;"><span class="cmd">$ status</span></div>
-        <div class="terminal-line"><span class="val">open to security engineer roles across Europe </span><span class="cursor-blink"></span></div>
+        <div class="terminal-line"><span class="val">open to security engineer · IT security consultant · GRC consultant roles </span><span class="cursor-blink"></span></div>
       </div>
 
       <div class="hero-cta">
@@ -678,9 +776,8 @@
         </p>
         <p>
           My background spans <span class="highlight">AppSec</span> (RESTler fuzzing in CI/CD pipelines at Bosch),
-          <span class="highlight">Cloud Security</span> (Azure IoT TARA under ISO/SAE 21434),
+          <span class="highlight">Cloud Security</span> (Azure IoT TARA under ISO 27001),
           and <span class="highlight">academic security research</span> (privacy-preserving authentication, fraud detection).
-          My long-term goal is a <span class="highlight">CISO-track</span> role.
         </p>
       </div>
       <div class="about-stats">
@@ -693,14 +790,68 @@
           <span class="stat-label">NIS2 Jurisdictions Owned</span>
         </div>
         <div class="stat-card">
-          <span class="stat-num">19K+</span>
-          <span class="stat-label">Campaigns Analyzed (Thesis)</span>
+          <span class="stat-num">4</span>
+          <span class="stat-label">Companies & Research Orgs</span>
         </div>
         <div class="stat-card">
-          <span class="stat-num">CISO</span>
-          <span class="stat-label">Long-Term Track</span>
+          <span class="stat-num">EU</span>
+          <span class="stat-label">Open to Roles Across Europe</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <p class="section-label">// 02. experience</p>
+      <h2 class="section-title">Where I've <span class="accent">Worked</span></h2>
+    </div>
+
+    <div class="exp-list">
+
+      <div class="exp-card reveal">
+        <div>
+          <div class="exp-company">Allianz Technology SE</div>
+          <div class="exp-role">Working Student — Protection & Resilience · Ludwigsburg, Germany</div>
+        </div>
+        <div class="exp-date">2024 — Present</div>
+        <ul class="exp-bullets">
+          <li>Own dual-jurisdiction NIS2 incident reporting playbooks for Germany (BSI) and Italy (ACN), covering all three BSI reporting phases</li>
+          <li>Build Power Automate workflows for EverBridge alert triage, shared mailbox routing, and AI-powered end-of-day alert summaries</li>
+          <li>Contribute to DORA gap analysis and maintain Power BI incident dashboards for the Protection & Resilience team</li>
+        </ul>
+      </div>
+
+      <div class="exp-card reveal">
+        <div>
+          <div class="exp-company">Bosch Digital Twin Industries</div>
+          <div class="exp-role">Working Student — Cloud Security · Germany</div>
+        </div>
+        <div class="exp-date">2023 — 2024</div>
+        <ul class="exp-bullets">
+          <li>Conducted a full TARA (Threat Analysis and Risk Assessment) of an Azure IoT platform under ISO/SAE 27001</li>
+          <li>Identified an unregistered ML model asset — an unencrypted pickle file with no scoped access controls — formally accepted by the Security Manager as a governance finding</li>
+          <li>Recommended confidential computing controls and documented asset risk in the formal risk register</li>
+        </ul>
+      </div>
+
+      <div class="exp-card reveal">
+        <div>
+          <div class="exp-company">Bosch Software Flow</div>
+          <div class="exp-role">Working Student — Application Security · Germany</div>
+        </div>
+        <div class="exp-date">2022 — 2023</div>
+        <ul class="exp-bullets">
+          <li>Integrated Microsoft RESTler REST API fuzzer into GitHub Actions CI/CD pipeline — enabling automated dynamic security testing on every pull request</li>
+          <li>Delivered client-facing security posture presentations and performed vulnerability triage across sprint cycles</li>
+          <li>Contributed to secure SDLC practices and shift-left security adoption across the development team</li>
+        </ul>
+      </div>
+
+
     </div>
   </section>
 
@@ -709,7 +860,7 @@
   <!-- PROJECTS -->
   <section id="projects">
     <div class="reveal">
-      <p class="section-label">// 02. projects</p>
+      <p class="section-label">// 03. projects</p>
       <h2 class="section-title">What I've <span class="accent">Built</span></h2>
     </div>
 
@@ -718,7 +869,6 @@
       <div class="project-card reveal">
         <div>
           <div class="project-tag-row">
-            <span class="tag featured">🔨 In Progress</span>
             <span class="tag">Python</span>
             <span class="tag">Security Tooling</span>
             <span class="tag">CLI</span>
@@ -742,61 +892,16 @@
             <span class="tag">Python</span>
             <span class="tag">ML</span>
             <span class="tag">MongoDB</span>
-            <span class="tag">Playwright</span>
+            <span class="tag">Selenium</span>
             <span class="tag">CISPA</span>
           </div>
           <div class="project-name">Fraud Detection Pipeline — M.Sc. Thesis</div>
           <p class="project-desc">
             Multi-platform fraud detection system for crowdfunding campaigns. Built scrapers
-            using Playwright and Selenium across platforms including GoFundMe (~19K campaigns),
-            implemented near-duplicate detection via Jaccard similarity and union-find clustering,
-            fraud signal scoring, and MongoDB Atlas integration. Research conducted at CISPA
-            Helmholtz Center under Prof. Dr. Thorsten Holz.
+            using Playwright and Selenium, implemented near-duplicate detection via Jaccard
+            similarity and union-find clustering, fraud signal scoring, and MongoDB Atlas
+            integration. Research conducted at CISPA Helmholtz Center under Prof. Dr. Thorsten Holz.
           </p>
-        </div>
-        <div class="project-links">
-          <a href="#" class="project-link">→ Paper (soon)</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div>
-          <div class="project-tag-row">
-            <span class="tag">AppSec</span>
-            <span class="tag">REST API Fuzzing</span>
-            <span class="tag">GitHub Actions</span>
-            <span class="tag">Bosch</span>
-          </div>
-          <div class="project-name">RESTler CI/CD Security Integration</div>
-          <p class="project-desc">
-            Integrated Microsoft's RESTler REST API fuzzer into a GitHub Actions CI/CD pipeline
-            at Bosch Software Flow — enabling automated dynamic security testing on every pull request.
-            Included client-facing security posture presentations and vulnerability triage.
-          </p>
-        </div>
-        <div class="project-links">
-          <a href="#" class="project-link">→ Private</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div>
-          <div class="project-tag-row">
-            <span class="tag">Cloud Security</span>
-            <span class="tag">Azure IoT</span>
-            <span class="tag">ISO/SAE 21434</span>
-            <span class="tag">TARA</span>
-          </div>
-          <div class="project-name">Azure IoT Threat Analysis & Risk Assessment</div>
-          <p class="project-desc">
-            Conducted a full TARA (Threat Analysis and Risk Assessment) of an Azure IoT platform
-            at Bosch Digital Twin Industries under ISO/SAE 21434. Identified an unregistered ML model
-            asset (unencrypted pickle file with no scoped access controls) — formally accepted by the
-            Security Manager as a governance finding.
-          </p>
-        </div>
-        <div class="project-links">
-          <a href="#" class="project-link">→ Private</a>
         </div>
       </div>
 
@@ -808,7 +913,7 @@
   <!-- SKILLS -->
   <section id="skills">
     <div class="reveal">
-      <p class="section-label">// 03. skills</p>
+      <p class="section-label">// 04. skills</p>
       <h2 class="section-title">What I <span class="accent">Know</span></h2>
     </div>
 
@@ -830,12 +935,9 @@
         <div class="skill-cat-title">// Cloud & Infrastructure</div>
         <ul class="skill-list">
           <li>Azure</li>
-          <li>Azure IoT</li>
           <li>AWS EKS</li>
           <li>Azure AKS</li>
           <li>Kubernetes</li>
-          <li>IAM</li>
-          <li>ISO/SAE 21434</li>
         </ul>
       </div>
 
@@ -848,7 +950,7 @@
           <li>BSI Reporting</li>
           <li>TARA</li>
           <li>Incident Playbooks</li>
-          <li>Gap Analysis</li>
+          <li>Gap Analysis Remediation</li>
         </ul>
       </div>
 
@@ -856,11 +958,11 @@
         <div class="skill-cat-title">// Languages & Tools</div>
         <ul class="skill-list">
           <li>Python</li>
-          <li>Playwright</li>
           <li>Selenium</li>
           <li>MongoDB</li>
           <li>Power Automate</li>
           <li>Power BI</li>
+          <li>Power Apps</li>
           <li>SQL</li>
         </ul>
       </div>
@@ -871,21 +973,17 @@
           <li>Fraud Detection</li>
           <li>ZKP / PS Signatures</li>
           <li>Tor Fingerprinting</li>
-          <li>Near-Duplicate Detection</li>
-          <li>ML Security</li>
-          <li>Privacy Engineering</li>
         </ul>
       </div>
 
       <div class="skill-category">
-        <div class="skill-cat-title">// Certifications</div>
+        <div class="skill-cat-title">// Langauges</div>
         <ul class="skill-list">
-          <li>SC-200 (In Progress)</li>
-          <li>ISO 27001:2022 (LinkedIn)</li>
-          <li>M.Sc. CS — Saarland</li>
-          <li>B.E. Silver Medal</li>
+          <li>English - C1</li>
+          <li>German - A2(pursuing)</li>
         </ul>
       </div>
+
     </div>
   </section>
 
@@ -894,7 +992,7 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="reveal">
-      <p class="section-label">// 04. contact</p>
+      <p class="section-label">// 05. contact</p>
       <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
     </div>
     <div class="contact-box reveal">
@@ -903,9 +1001,9 @@
         If you're working on something interesting or want to talk security — reach out.
       </p>
       <div class="contact-links">
-        <a href="https://linkedin.com/in/harshithakishorkumar" target="_blank" class="btn btn-primary">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/harshitha-kishorekumar/" target="_blank" class="btn btn-primary">LinkedIn</a>
         <a href="https://github.com/harshithakishorkumar" target="_blank" class="btn btn-secondary">GitHub</a>
-        <a href="mailto:harshitha@example.com" class="btn btn-secondary">Email</a>
+        <a href="mailto:harshithakm58@gmail.com" class="btn btn-secondary">Email</a>
       </div>
     </div>
   </section>
